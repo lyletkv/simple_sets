@@ -5,40 +5,144 @@
   <meta name="google-site-verification" content="r3A-K7U4tNXWRQj36gV7Ct8vKtTC3bVlWuyQDzoOOzc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simple Sets — Setlist and Songbook Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000000;
+      --surface: #1C1B1F;
+      --surface-2: #2B2930;
+      --border: #49454F;
+      --border-soft: #2B2930;
+      --primary: #6750A4;
+      --primary-light: #9A84D4;
+      --primary-container: #4A3F7A;
+      --text: #E6E1E5;
+      --text-2: #CAC4D0;
+      --text-3: #938F99;
+      --font: 'Plus Jakarta Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+
+    .page { max-width: 880px; margin: 0 auto; padding: 56px 32px 80px; }
+
+    /* HERO */
+    .hero { padding: 32px 0 48px; border-bottom: 1px solid var(--border-soft); margin-bottom: 56px; }
+    .hero-logo { display: block; width: 100%; max-width: 360px; height: auto; border-radius: 14px; margin-bottom: 32px; box-shadow: 0 8px 32px rgba(103,80,164,0.25); }
+    .eyebrow { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary-light); background: rgba(103,80,164,0.14); padding: 6px 12px; border-radius: 100px; margin-bottom: 20px; }
+    h1 { font-size: clamp(34px, 5vw, 52px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.05; color: var(--text); margin-bottom: 20px; text-wrap: balance; }
+    .lead { font-size: 18px; color: var(--text-2); line-height: 1.6; max-width: 620px; text-wrap: pretty; }
+
+    /* SECTIONS */
+    section { margin-bottom: 56px; }
+    .section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--primary-light); margin-bottom: 10px; }
+    h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: var(--text); margin-bottom: 14px; }
+    p { font-size: 16px; color: var(--text-2); line-height: 1.7; text-wrap: pretty; margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+    strong { color: var(--text); font-weight: 600; }
+
+    ul { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; gap: 10px; }
+    li { display: flex; gap: 12px; align-items: flex-start; font-size: 15.5px; color: var(--text-2); line-height: 1.6; padding-left: 0; }
+    li::before { content: ""; flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--primary-light); margin-top: 10px; }
+
+    /* PREMIUM BLOCK */
+    .premium { background: linear-gradient(180deg, rgba(103,80,164,0.10) 0%, rgba(103,80,164,0.04) 100%); border: 1px solid var(--primary-container); border-radius: 16px; padding: 36px 32px; margin-bottom: 56px; }
+    .premium h2 { margin-bottom: 8px; }
+    .premium .premium-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #C2AAFF; background: var(--primary-container); padding: 4px 10px; border-radius: 100px; margin-bottom: 14px; }
+    .premium ul { margin-top: 18px; gap: 14px; }
+    .premium li { font-size: 15.5px; }
+    .premium li strong { display: block; margin-bottom: 2px; color: var(--text); }
+    .premium li span { color: var(--text-2); }
+
+    /* CTA / TRY */
+    .try { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 16px; padding: 32px; margin-bottom: 56px; }
+    .try h2 { margin-bottom: 10px; }
+
+    /* FOOTER LINKS */
+    .footer { padding-top: 32px; border-top: 1px solid var(--border-soft); }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; color: var(--text-3); }
+    .footer-links a { color: var(--text-2); text-decoration: none; border-bottom: 1px solid transparent; transition: color 0.15s, border-color 0.15s; padding-bottom: 1px; }
+    .footer-links a:hover { color: var(--primary-light); border-color: var(--primary-light); }
+    .footer-links .sep { color: var(--text-3); opacity: 0.5; }
+    .footer-meta { font-size: 13px; color: var(--text-3); margin-top: 16px; }
+
+    @media (max-width: 600px) {
+      .page { padding: 32px 20px 60px; }
+      .hero { padding: 16px 0 32px; margin-bottom: 40px; }
+      section, .premium, .try { margin-bottom: 40px; }
+      .premium, .try { padding: 24px 20px; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Simple Sets — Setlist and Songbook Manager</h1>
-  <p>The setlist app built for practice and performance. Organize your songs, build setlists, and perform with confidence — all without an internet connection.</p>
+  <div class="page">
 
-  <h2>For the Stage</h2>
-  <p>Pull up any song in seconds during a live performance. Lyrics and chords are displayed in a clean, full-screen view optimized for low light. Songs are broken into pages you can navigate with a tap, swipe, or Bluetooth foot pedal — keeping your hands on your instrument the whole time. Auto-scroll handles the scrolling for you when you need it. Need to change keys at soundcheck? Transpose on the fly and save the new key with a single tap.</p>
+    <header class="hero">
+      <img class="hero-logo" src="assets/simple-sets-logo.jpg" alt="Simple Sets">
+      <div class="eyebrow">Simple Sets</div>
+      <h1>Setlist and songbook management for practice and performance.</h1>
+      <p class="lead">Organize your songs, build setlists, and perform with confidence — all without an internet connection.</p>
+    </header>
 
-  <h2>Chord Support Built In</h2>
-  <p>Import ChordPro files or plain-text lyrics with chords above the words — Simple Sets detects and converts them automatically. Guitar and piano chord diagrams appear inline so you never have to look anything up mid-show.</p>
+    <section>
+      <div class="section-eyebrow">For the Stage</div>
+      <h2>Built for live performance</h2>
+      <p>Pull up any song in seconds during a live performance. Lyrics and chords are displayed in a clean, full-screen view optimized for low light. Songs are broken into pages you can navigate with a tap, swipe, or Bluetooth foot pedal — keeping your hands on your instrument the whole time. Auto-scroll handles the scrolling for you when you need it. Need to change keys at soundcheck? Transpose on the fly and save the new key with a single tap.</p>
+    </section>
 
-  <h2>Your Songs, Your Way</h2>
-  <p>Customize fonts, text size, colors, and line spacing per song. Set a scroll speed for each track. Use dual-view mode to see two verses side by side on a tablet. Print a physical setlist with all of your lyrics or chords in just a couple of taps.</p>
+    <section>
+      <div class="section-eyebrow">Chord Support</div>
+      <h2>Chord support built in</h2>
+      <p>Import ChordPro files or plain-text lyrics with chords above the words — Simple Sets detects and converts them automatically. Guitar and piano chord diagrams appear inline so you never have to look anything up mid-show.</p>
+    </section>
 
-  <h2>Everything in One Place</h2>
-  <ul>
-    <li>Song library with search and alphabetical browsing</li>
-    <li>Build setlists by dragging songs into any order</li>
-    <li>Built-in metronome with tap tempo</li>
-    <li>Share individual songs or entire setlists as .simpleset files</li>
-    <li>Full backup and restore — export your library anytime, import on any device</li>
-  </ul>
+    <section>
+      <div class="section-eyebrow">Customization</div>
+      <h2>Your songs, your way</h2>
+      <p>Customize fonts, text size, colors, and line spacing per song. Set a scroll speed for each track. Use dual-view mode to see two verses side by side on a tablet. Print a physical setlist with all of your lyrics or chords in just a couple of taps.</p>
+    </section>
 
-  <h2>Try Before You Buy</h2>
-  <p>Simple Sets is free to download and use for up to 10 songs and 2 setlists. This lets you test your library, customize your layouts, and ensure your Bluetooth pedals work perfectly with no commitment.</p>
+    <section>
+      <div class="section-eyebrow">Everything in One Place</div>
+      <h2>One app for the whole gig</h2>
+      <ul>
+        <li>Song library with search and alphabetical browsing</li>
+        <li>Build setlists by dragging songs into any order</li>
+        <li>Built-in metronome with tap tempo</li>
+        <li>Share individual songs or entire setlists as <code style="font-family: inherit; color: var(--text);">.simpleset</code> files</li>
+        <li>Full backup and restore — export your library anytime, import on any device</li>
+      </ul>
+    </section>
 
-  <h2>Unlock the Full Stage Experience</h2>
-  <p>A single one-time purchase removes all limits and unlocks cloud features:</p>
-  <ul>
-    <li><strong>Unlimited Songs &amp; Setlists:</strong> Build a library for every gig.</li>
-    <li><strong>Google Drive Backup:</strong> Keep your entire songbook synced and safe across all your devices.</li>
-    <li><strong>No Subscriptions:</strong> Buy once, own it forever. No monthly fees, no ads, and no accounts required.</li>
-  </ul>
+    <div class="try">
+      <div class="section-eyebrow">Try Before You Buy</div>
+      <h2>Free to start</h2>
+      <p>Simple Sets is free to download and use for up to <strong>10 songs and 2 setlists</strong>. This lets you test your library, customize your layouts, and ensure your Bluetooth pedals work perfectly with no commitment.</p>
+    </div>
 
-  <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
-</body>
+    <div class="premium">
+      <span class="premium-tag">Premium</span>
+      <h2>Unlock the full stage experience</h2>
+      <p>A single one-time purchase removes all limits and unlocks cloud features:</p>
+      <ul>
+        <li><div><strong>Unlimited Songs &amp; Setlists</strong><span>Build a library for every gig.</span></div></li>
+        <li><div><strong>Google Drive Backup</strong><span>Keep your entire songbook synced and safe across all your devices.</span></div></li>
+        <li><div><strong>No Subscriptions</strong><span>Buy once, own it forever. No monthly fees, no ads, and no accounts required.</span></div></li>
+      </ul>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="user_guide.html">User Guide</a>
+        <span class="sep">·</span>
+        <a href="privacy.html">Privacy Policy</a>
+        <span class="sep">·</span>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+      <div class="footer-meta">© Simple Sets · <a href="/cdn-cgi/l/email-protection#f0838580809f8284de83999d809c9583958483b0979d91999cde939f9d" style="color: var(--text-2); text-decoration: none;"><span class="__cf_email__" data-cfemail="acdfd9dcdcc3ded882dfc5c1dcc0c9dfc9d8dfeccbc1cdc5c082cfc3c1">[email&#160;protected]</span></a></div>
+    </footer>
+
+  </div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
 </html>
